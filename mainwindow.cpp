@@ -22,9 +22,12 @@ void MainWindow::initializePhraseData(phraseData* importedData)
 void MainWindow::initializeProgram()
 {
     QString filePath = "mainLanguageData.txt";
-    phrasesData->openDataFile(filePath);
+    phrasesData->createDataFile(filePath);
     filePath = "secondLanguageData.txt";
-    phrasesData->openDataFile(filePath);
+    phrasesData->createDataFile(filePath);
+    filePath = "savedPhrases.txt";
+    phrasesData->createDataFile(filePath);
+    phrasesData->checkSaveFile();
 }
 
 void MainWindow::on_AddPhraseBut_clicked()

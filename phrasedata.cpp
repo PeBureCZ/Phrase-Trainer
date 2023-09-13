@@ -33,66 +33,74 @@ int phraseData::getPhrasesCount()
     return mainLanguageDatabase.size();
 }
 
-void checkSaveFile()
+void phraseData::checkSaveFile()
 {
-    //openDataFile IT MUST BE COMPLETED  (CREATE OR USE -> FILL PHRASEDATA CLASS)
-    QString filePath = "saveFile";
-    QFile dataFile = filePath;
-    if (!dataFile.exists())
-    {
-        //CREATE FILE
+    QString filePath = "savedPhrases.txt";
+    QFile dataFileSaved = filePath;
+    QString line = "";
+    if (dataFileSaved.open(QIODevice::ReadWrite| QIODevice::Text | QIODevice::Append)) //can create new file
 
-        //USE CLASS PHRASEDATA => FILL...
-        //.....LOOP
-        //CREATE NEW LINE - MAIN
-        //CREATE NEW LINE - SECOND
-        //.....LOOP
-    }
-    else
-    {
-        //nothing - delete?
-    }
-    dataFile.close();
 
+    //__________CONDITION NOT WORKING CORECTLY NOW!!!!!!!!!!!!!!!!!!!!!
+
+
+    {
+        QTextStream inSaved(&dataFileSaved);
+        line = inSaved.readLine(); //copy first line
+        if (line.length() == 0) //check if savedData-first line is empty?
+        {
+            inSaved << line + " - test";
+            filePath = "mainLanguageData.txt";
+            QFile dataFileMain = filePath;
+            filePath = "secondLanguageData.txt";
+            QFile dataFileSecond = filePath;
+            QTextStream inMain(&dataFileMain);
+            QTextStream inSecond(&dataFileSecond);
+            dataFileMain.open(QIODevice::ReadOnly);
+            dataFileSecond.open(QIODevice::ReadOnly);
+            int repeatLine = 1;
+            while (!inMain.atEnd() && repeatLine <= 100000)
+            {
+
+                if (repeatLine % 2 == 0)
+                {
+                    line = inMain.readLine();
+                    addPhrase(line, 0); //copy data from file to phrasedata class
+                    inSaved << line + "\n";
+                }
+                else
+                {
+                    line = inSecond.readLine();
+                    addPhrase(line, 1); //copy data from file to phrasedata class
+                    inSaved << line + "\n";
+                }
+                repeatLine++;
+            }
+            dataFileMain.close();
+            dataFileSecond.close();
+        }
+        dataFileSaved.close();
+    }
 }
 
-void phraseData::openDataFile(QString filePath)
+void phraseData::createDataFile(QString filePath)
 {
     QFile dataFile = filePath;
-    QString line = "";
-    if (dataFile.open(QIODevice::ReadWrite)) //can create new file
+    if (!dataFile.open(QIODevice::ReadOnly)) //can open? = exist
     {
-        QTextStream in(&dataFile);
-        int maxRepeatLine = 0;
-        while (!in.atEnd() && maxRepeatLine <= 100000)
-        {
-            line = in.readLine();
-
-            addPhrase(line, 0); //copy data from file to phrasedata class
-            maxRepeatLine++;
-
-        }
-        dataFile.close();
+        dataFile.open(QIODevice::WriteOnly); //no exist? = create
     }
-    else
-    {
-        //file not created?!
-    }
+    dataFile.close();
 }
 
 void phraseData::writeNewLineToDataFile(QString filePath, QString textData)
 {
     QFile dataFile = filePath;
-    QString line = "";
     if (dataFile.open(QIODevice::WriteOnly| QIODevice::Text | QIODevice::Append)) //can create new file
     {
         QTextStream in(&dataFile);
         in << textData + "\n";
         dataFile.close();
-    }
-    else
-    {
-        //file not created?!
     }
 }
 

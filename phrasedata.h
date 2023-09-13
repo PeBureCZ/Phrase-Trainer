@@ -5,6 +5,7 @@
 #include <QString>
 #include <QFile>
 #include <QTextStream>
+#include <QCoreApplication> // "modulo"
 
 class phraseData
 {
@@ -15,7 +16,7 @@ public:
 
     void checkSaveFile();
     void addPhrase(QString newPhrase, int languageNum);
-    void openDataFile(QString filePath);
+    void createDataFile(QString filePath);
     void writeNewLineToDataFile(QString filePath, QString textData);
 
     QString getPhrase(int line);
