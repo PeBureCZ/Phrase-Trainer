@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow
 
 private:
     Ui::MainWindow *ui;
-    phraseData* phrasesData;
+    phraseData* phrasesDataObj;
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -31,5 +31,6 @@ private slots:
     void on_AcceptBut_clicked();
 
 
+    void on_NextBut_clicked();
 };
 #endif // MAINWINDOW_H
