@@ -53,6 +53,10 @@ void MainWindow::on_NextBut_clicked()
 
 void MainWindow::on_UnhideBut_clicked()
 {
-    phrasesDataObj->saveProgress(); //testOnly
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    phrasesDataObj->saveProgress(); //close = save from loaded data
 }
 
