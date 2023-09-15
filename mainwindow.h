@@ -2,9 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+
 #include "phraseaddwindow.h"
 #include "phrasedata.h"
 #include <QString>
+
+#include <QCoreApplication>
 
 
 QT_BEGIN_NAMESPACE
@@ -32,5 +35,6 @@ private slots:
 
 
     void on_NextBut_clicked();
+    void on_UnhideBut_clicked();
 };
 #endif // MAINWINDOW_H

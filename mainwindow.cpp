@@ -46,7 +46,13 @@ void MainWindow::on_AcceptBut_clicked()
 
 void MainWindow::on_NextBut_clicked()
 {
-    //phrasesDataObj->saveProgress(); //testOnly
     ui->PhraseText->setText(phrasesDataObj->getRandomPhrase(true)); //bool = remove phrase from data?
+    ui->PhraseEditText->setText(QString::number(phrasesDataObj->getPhrasesCount()));
+}
+
+
+void MainWindow::on_UnhideBut_clicked()
+{
+    phrasesDataObj->saveProgress(); //testOnly
 }
 

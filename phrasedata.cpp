@@ -104,62 +104,10 @@ void phraseData::checkSaveFiles()
                 addPhrase(line, 1); //copy data from file to phrasedata class (second)
             }
         }
-        dataFileSavedMain.close();
-    }
-}
-
-void phraseData::saveProgress() //  NOT COMPLETED!!!!!!!!!!! BUG
-{
-    QString filePath = "savedPhrasesMain.txt"; //saved phrases data - main
-    QFile dataFileSavedMain = filePath;
-    QTextStream InSavedMain(&dataFileSavedMain);
-    dataFileSavedMain.open(QIODevice::WriteOnly);
-
-    filePath = "savedPhrasesSecond.txt";
-    QFile dataFileSavedSecond = filePath;
-    QTextStream InSavedSecond(&dataFileSavedSecond);
-    dataFileSavedSecond.open(QIODevice::WriteOnly);
-
-    QString emptyText = "";
-
-    dataFileSavedMain.write(emptyText.toUtf8());
-    dataFileSavedSecond.write(emptyText.toUtf8());
-
-    if (mainLanguageDatabase.size() > 1) //index 0 = "" (always)
-    {
-        for (int i = 0; i < getPhrasesCount(); i++)
-        {
-            InSavedMain << getPhrase(i, 0);
-            InSavedSecond << getPhrase(i, 1);
-        }
     }
     dataFileSavedMain.close();
-    dataFileSavedSecond.close();
 }
 
-QString phraseData::getRandomPhrase(bool removePhrase)
-{
-    if (mainLanguageDatabase.size() >= 2) //index 0 = "";
-    {
-        int minPhraseLine = 1;
-        int maxPhraseLine = mainLanguageDatabase.size(); //-1 not included due to BOUNDED in random gen
-        int randomLine = QRandomGenerator::global()->bounded(minPhraseLine, maxPhraseLine);
-        if (removePhrase = false) return mainLanguageDatabase[randomLine];
-        else
-        {
-            QString out = mainLanguageDatabase[randomLine];
-            mainLanguageDatabase.removeAt(randomLine);
-            secondLanguageDatabase.removeAt(randomLine);
-            return out;
-        }
-    }
-    else
-    {
-        return "LEVEL COMPLETED!\nTo improve your level, add more phrases ";
-        saveProgress();
-        checkSaveFiles();
-    }
-}
 
 
 void phraseData::createDataFile(QString filePath)
@@ -182,4 +130,84 @@ void phraseData::writeNewLineToDataFile(QString filePath, QString textData)
         dataFile.close();
     }
 }
+
+void phraseData::saveProgress()
+{
+    if (mainLanguageDatabase.size() == 1)
+    {
+        //CLEAR FILE START
+        QString emptyText = "";
+
+        QString filePath = "savedPhrasesMain.txt";
+        QFile dataFileSavedMain = filePath;
+        QTextStream InSavedMain(&dataFileSavedMain);
+        dataFileSavedMain.open(QIODevice::WriteOnly);
+        dataFileSavedMain.write(emptyText.toUtf8());
+        dataFileSavedMain.close();
+
+        filePath = "savedPhrasesSecond.txt";
+        QFile dataFileSavedSecond = filePath;
+        QTextStream InSavedSecond(&dataFileSavedSecond);
+        dataFileSavedSecond.open(QIODevice::WriteOnly);
+        dataFileSavedSecond.write(emptyText.toUtf8());
+        dataFileSavedSecond.close();
+        //CLEAR FILE END
+
+        checkSaveFiles();
+    }
+    else
+    {
+        QString line = "";
+
+        //saved phrases data - main
+        QString filePath = "savedPhrasesMain.txt"; //saved phrases data - main
+        QFile dataFileSavedMain = filePath;
+        dataFileSavedMain.open(QIODevice::WriteOnly);
+        QTextStream InSavedMain(&dataFileSavedMain);
+        dataFileSavedMain.write(line.toUtf8());
+
+        //saved phrases data - second
+        filePath = "savedPhrasesSecond.txt";
+        QFile dataFileSavedSecond = filePath;
+        QTextStream InSavedSecond(&dataFileSavedSecond);
+        dataFileSavedSecond.open(QIODevice::WriteOnly);
+        dataFileSavedSecond.write(line.toUtf8());
+
+        for (int i = 1; i < getPhrasesCount(); i++)
+        {
+            line = getPhrase(i, 0);
+            writeNewLineToDataFile("savedPhrasesMain.txt", line);
+
+            line = getPhrase(i, 1);
+            writeNewLineToDataFile("savedPhrasesSecond.txt", line);
+        }
+
+        dataFileSavedMain.close();
+        dataFileSavedSecond.close();
+    }
+}
+
+QString phraseData::getRandomPhrase(bool removePhrase)
+{
+    if (mainLanguageDatabase.size() >= 2) //index 0 = "";
+    {
+        int minPhraseLine = 1;
+        int maxPhraseLine = mainLanguageDatabase.size(); //-1 not included due to BOUNDED in random gen
+        int randomLine = QRandomGenerator::global()->bounded(minPhraseLine, maxPhraseLine);
+        if (removePhrase = false) return mainLanguageDatabase[randomLine];
+        else
+        {
+            QString out = mainLanguageDatabase[randomLine];
+            mainLanguageDatabase.removeAt(randomLine);
+            secondLanguageDatabase.removeAt(randomLine);
+            return out;
+        }
+    }
+    else
+    {
+        saveProgress();
+        return "LEVEL COMPLETED!\nTo improve your level, add more phrases ";
+    }
+}
+
 
