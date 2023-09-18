@@ -19,18 +19,18 @@ void phraseData::addPhrase(QString newPhrase, int languageNum)
     }
 }
 
-QString phraseData::getPhrase(int line, int languageNum)
+QString phraseData::getPhrase(int index, int languageNum)
 {
 
-    if (line >= 0 && line <= mainLanguageDatabase.size())
+    if (index >= 0 && index < mainLanguageDatabase.size())
     {
         switch (languageNum)
         {
         case 0:
-            return mainLanguageDatabase[line];
+            return mainLanguageDatabase[index];
             break;
         case 1:
-            return secondLanguageDatabase[line];
+            return secondLanguageDatabase[index];
             break;
         }
 
@@ -187,27 +187,25 @@ void phraseData::saveProgress()
     }
 }
 
-QString phraseData::getRandomPhrase(bool removePhrase)
+int phraseData::getRandomPhraseIndex()
 {
     if (mainLanguageDatabase.size() >= 2) //index 0 = "";
     {
         int minPhraseLine = 1;
         int maxPhraseLine = mainLanguageDatabase.size(); //-1 not included due to BOUNDED in random gen
-        int randomLine = QRandomGenerator::global()->bounded(minPhraseLine, maxPhraseLine);
-        if (removePhrase = false) return mainLanguageDatabase[randomLine];
-        else
-        {
-            QString out = mainLanguageDatabase[randomLine];
-            mainLanguageDatabase.removeAt(randomLine);
-            secondLanguageDatabase.removeAt(randomLine);
-            return out;
-        }
+        return QRandomGenerator::global()->bounded(minPhraseLine, maxPhraseLine);
     }
-    else
+    else return 0;
+}
+
+void phraseData::deletePhrase(int indexToRemove)
+{
+    if (mainLanguageDatabase.size() > 1) //index 0 = "";
     {
-        saveProgress();
-        return "LEVEL COMPLETED!\nTo improve your level, add more phrases ";
+        mainLanguageDatabase.removeAt(indexToRemove);
+        secondLanguageDatabase.removeAt(indexToRemove);
     }
 }
+
 
 

@@ -22,9 +22,10 @@ public:
     void writeNewLineToDataFile(QString filePath, QString textData);
 
     QString getPhrase(int line, int languageNum);
-    QString getRandomPhrase(bool removePhrase);
+    int getRandomPhraseIndex();
     void saveProgress();
     int getPhrasesCount();
+    void deletePhrase(int indexToRemove);
 
 
 };

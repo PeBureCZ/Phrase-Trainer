@@ -38,7 +38,7 @@
      <enum>Qt::LeftToRight</enum>
     </property>
     <property name="text">
-     <string>Phrase text - text will be deleted after start</string>
+     <string>Click on &quot;Next phrase&quot; to start...</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignBottom|Qt::AlignHCenter</set>
@@ -125,6 +125,19 @@
     <property name="text">
      <string>Next phrase
 (I know...)</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="SwitchButt">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>10</y>
+      <width>201</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Phrases language (actual: english)</string>
     </property>
    </widget>
   </widget>

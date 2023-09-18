@@ -24,6 +24,8 @@ protected:
 private:
     Ui::MainWindow *ui;
     phraseData* phrasesDataObj;
+    bool trainMainLanguage;
+    QString savedPhraseText;
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -38,5 +40,6 @@ private slots:
 
     void on_NextBut_clicked();
     void on_UnhideBut_clicked();
+    void on_SwitchButt_clicked();
 };
 #endif // MAINWINDOW_H
