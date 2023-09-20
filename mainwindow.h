@@ -26,6 +26,8 @@ private:
     phraseData* phrasesDataObj;
     bool trainMainLanguage;
     QString savedPhraseText;
+    bool phraseAccepted;
+    int shownPhraseIndex;
 
 public:
     MainWindow(QWidget *parent = nullptr);
