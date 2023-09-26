@@ -38,8 +38,6 @@ public:
 private slots:
     void on_AddPhraseBut_clicked();
     void on_AcceptBut_clicked();
-
-
     void on_NextBut_clicked();
     void on_UnhideBut_clicked();
     void on_SwitchButt_clicked();

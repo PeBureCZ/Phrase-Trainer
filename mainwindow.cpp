@@ -9,11 +9,11 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    phrasesDataObj = nullptr;
-    trainMainLanguage = true;
+    phrasesDataObj = nullptr; //program functions
+    trainMainLanguage = true; //constant for switch languages
     savedPhraseText = "";
     phraseAccepted = true;
-    shownPhraseIndex = 0;
+    shownPhraseIndex = 0; //saved phrase index
 }
 
 MainWindow::~MainWindow()
@@ -23,7 +23,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::initializePhraseData(phraseData* importedData)
 {
-    phrasesDataObj = importedData;
+    phrasesDataObj = importedData; //imported from main
 }
 
 void MainWindow::initializeProgram()
@@ -40,7 +40,7 @@ void MainWindow::initializeProgram()
     phrasesDataObj->checkSaveFiles();
 }
 
-void MainWindow::on_AddPhraseBut_clicked()
+void MainWindow::on_AddPhraseBut_clicked() //create new window - add phrases
 {
     PhraseAddWindow phraseAdd;
     phraseAdd.setModal(true);
@@ -48,8 +48,7 @@ void MainWindow::on_AddPhraseBut_clicked()
     phraseAdd.exec();
 }
 
-
-void MainWindow::on_NextBut_clicked()
+void MainWindow::on_NextBut_clicked() //click on next phrase
 {
     if (phraseAccepted && shownPhraseIndex != 0) phrasesDataObj->deletePhrase(shownPhraseIndex); //delete both languages
 
@@ -69,7 +68,8 @@ void MainWindow::on_NextBut_clicked()
 
     ui->InformText->hide();
     ui->NextBut->setText(DEF_TEXT_NEXTBUT);
-    if (shownPhraseIndex > 0)
+
+    if (shownPhraseIndex > 0) //uncompleted or not started
     {
         ui->PhraseEditText->setText("");
         if (trainMainLanguage)
@@ -86,7 +86,7 @@ void MainWindow::on_NextBut_clicked()
         }
             phraseAccepted = true; //reset to default
     }
-    else
+    else //started or completed
     {
        ui->PhraseText->setText(" LEVEL COMPLETED! \n To proceed to the next level, add more phrases and then click on the 'Next phrase' button ");
        ui->PhraseEditText->setText("");
@@ -139,7 +139,7 @@ void MainWindow::on_AcceptBut_clicked()
         ui->InformText->show();
         phraseAccepted = false;
         ui->InformText->setStyleSheet("QLabel { background-color : red; color : black; }"); //change style sheet
-        ui->InformText->setText("Phrase rejected");
+        ui->InformText->setText("Phrase \" " + ui->PhraseEditText->toPlainText() + "\" rejected");
         ui->NextBut->setText(DECLINED_TEXT_NEXTBUT);
     }
 }

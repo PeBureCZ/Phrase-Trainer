@@ -30,9 +30,7 @@ void PhraseAddWindow::on_acceptButt_clicked()
     QString textMain = ui->PhraseAddTextMain->toPlainText();
     QString textSecond = ui->PhraseAddTextSecond->toPlainText();
 
-    int sizeOfText1 = textMain.length();
-    int sizeOfText2 = textSecond.length();
-    if (sizeOfText1 > 0 && sizeOfText2 > 0)
+    if (textMain.length() > 0 && textSecond.length() > 0)
     {
         PhrasedataObject->addPhrase(textMain, 0);
         PhrasedataObject->addPhrase(textSecond, 1);
